@@ -1,0 +1,24 @@
+{
+  "name": "leagueofguessesback",
+  "version": "1.0.0",
+  "description": "Back-end for my League of Guesses game",
+  "main": "./src/index.ts",
+  "author": "Augusto Nunes Zacarias <augustonz2010@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/index.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.10.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
