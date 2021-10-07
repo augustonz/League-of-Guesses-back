@@ -24,16 +24,16 @@ export interface Room {
     users:UserRoom[]
 }
 
-export interface Game {
-    roomCode:string,
-    messages:Message[],
-    players:PlayerInfo[]
+export enum MessageTypes {
+    'RIGHT','WRONG','ALMOST','CHEATING'
 }
 
 export interface Message {
     username:string,
     content:string,
-    room:string
+    room:string,
+    color:string,
+    system:boolean
 }
 
 export interface changeReadyData extends join_room_data{
