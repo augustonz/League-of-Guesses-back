@@ -11,13 +11,14 @@ const blankUser:UserRoom = {username:'Blank',room:'',socketId:'',isReady:false,i
 const blankRoom:Room = {room:'',isOpen:false,leader:blankUser,users:[]}
 
 function createServer(httpServer:Server) {
-    const io = new SocketServer(httpServer, {
-        cors:{
-            origin:'http://localhost:3000',
-            credentials:true,
-            methods:['GET','POST']
-        }
-    });
+    const io = new SocketServer(httpServer
+        , {
+            cors:{
+                origin:process.env.FRONT_URL,
+                credentials:true,
+                methods:['GET','POST']
+            }
+        });
 
     function getUsersAndRoomData(roomCode:string):[Room,UserRoom[]] {
         const roomData = rooms.find(room=>room.room==roomCode);
