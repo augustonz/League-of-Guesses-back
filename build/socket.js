@@ -104,10 +104,10 @@ function createServer(httpServer) {
                 return;
             const { result, imgIndex } = game.checkAnswer(data);
             if (result == types_1.MessageTypes.CHEATING) {
-                socket.emit('send_message', createSysMessage('Não dê spoilers da resposta >:(', '#ff0000', data.room));
+                socket.emit('send_message', createSysMessage('Please don\'t spoil the fun for others.', '#ff0000', data.room));
             }
             else if (result == types_1.MessageTypes.ALMOST) {
-                socket.emit('send_message', createSysMessage('Você QUASE acertou a resposta!', '#F4DE93', data.room));
+                socket.emit('send_message', createSysMessage('You\'re almost there!', '#F4DE93', data.room));
             }
             else if (result == types_1.MessageTypes.WRONG) {
                 io.to(data.room).emit('send_message', data);
@@ -172,14 +172,32 @@ function createServer(httpServer) {
             const [roomData, usersData] = getUsersAndRoomData(room);
             roomData.isOpen = false;
             const newGame = new Game_1.default(roomData);
-            const intervalId = setInterval(() => {
+            /*function gameTime() {
+                newGame.handleGameTimer();
+                io.to(newGame.roomCode).emit('update_game',newGame);
+                if (newGame.hasWinner()){
+                    endGame(newGame);
+                }
+                setTimeout(gameTime,1000);
+            }*/
+            function gameTime() {
                 newGame.handleGameTimer();
                 io.to(newGame.roomCode).emit('update_game', newGame);
                 if (newGame.hasWinner()) {
                     endGame(newGame);
                 }
-            }, 1000);
-            games.push({ game: newGame, interval: intervalId });
+                setTimeout(gameTime, 1000);
+            }
+            /*const intervalId = setInterval(()=>{
+                newGame.handleGameTimer();
+                io.to(newGame.roomCode).emit('update_game',newGame);
+                if (newGame.hasWinner()){
+                    endGame(newGame);
+                }
+                setTimeout(gameTime,1000);
+            },1000);*/
+            gameTime();
+            games.push({ game: newGame, interval: setTimeout(() => { }) });
             io.to(room).emit('start_game', newGame);
         });
         socket.on('change_ready', (data) => {
